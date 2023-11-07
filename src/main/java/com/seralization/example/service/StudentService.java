@@ -6,6 +6,6 @@ import com.seralization.example.response.StudentResponse;
 
 public interface StudentService {
 
-    StudentResponse createStudent(StudentRequest studentRequest);
+    String createStudent(StudentRequest studentRequest);
 
 }

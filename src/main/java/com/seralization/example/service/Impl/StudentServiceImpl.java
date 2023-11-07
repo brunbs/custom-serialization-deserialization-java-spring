@@ -1,7 +1,8 @@
 package com.seralization.example.service.Impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seralization.example.request.StudentRequest;
-import com.seralization.example.response.StudentResponse;
 import com.seralization.example.service.StudentService;
 import com.seralization.example.util.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,18 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
 
     @Override
-    public StudentResponse createStudent(StudentRequest studentRequest) {
+    public String createStudent(StudentRequest studentRequest) {
+        try {
+            //some business logics
 
-        //some business logics
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(studentRequest);
 
-        return studentMapper.requestToResponse(studentRequest);
+            //send json to messaging (kafka)
+
+            return json;
+        } catch (JsonProcessingException e) {
+            return "";
+        }
     }
 }
