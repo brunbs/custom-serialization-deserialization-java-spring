@@ -2,9 +2,11 @@ package com.seralization.example.service.Impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.seralization.example.request.StudentRequest;
 import com.seralization.example.service.StudentService;
 import com.seralization.example.util.StudentMapper;
+import com.seralization.example.util.UpperCaseSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class StudentServiceImpl implements StudentService {
             //some business logics
 
             ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new SimpleModule().addSerializer(new UpperCaseSerializer()));
             String json = mapper.writeValueAsString(studentRequest);
 
             //send json to messaging (kafka)
